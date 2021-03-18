@@ -1,0 +1,16 @@
+:root {
+  --main-bg-color: rgb(25, 29, 59);
+  --main-text-color: rgb(235, 235, 235);
+}
+
+html,
+body {
+  margin: 0px;
+  padding: 0px;
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  background-color: var(--main-bg-color);
+  color: var(--main-text-color);
+}

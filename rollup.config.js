@@ -30,6 +30,17 @@ function serve() {
 	};
 }
 
+function typeCheck() {
+  return {
+    writeBundle() {
+      require('child_process').spawn('svelte-check', {
+        stdio: ['ignore', 'inherit', 'inherit'],
+        shell: true
+      });
+    }
+  }
+}
+
 export default {
 	input: 'app/client/src/main.ts',
 	output: {
@@ -39,6 +50,7 @@ export default {
 		file: 'app/client/build/bundle.js'
 	},
 	plugins: [
+		typeCheck(),
 		svelte({
 			preprocess: sveltePreprocess({ sourceMap: !production }),
 			compilerOptions: {
@@ -62,7 +74,8 @@ export default {
 		commonjs(),
 		typescript({
 			sourceMap: !production,
-			inlineSources: !production
+			inlineSources: !production,
+			strict: true
 		}),
 
 		// In dev mode, call `npm run start` once
