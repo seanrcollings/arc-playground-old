@@ -1,7 +1,10 @@
 from flask import send_from_directory, render_template as render
+from .api import api
 
 
 def init_routes(app):
+    api.init_app(app)
+
     @app.route("/")
     def base():
         return render("index.html")
