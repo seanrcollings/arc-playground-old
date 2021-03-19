@@ -1,9 +1,9 @@
-from flask import send_from_directory, render_template as render
+from flask import send_from_directory, render_template as render, Flask
 from .api import api
 
 
-def init_routes(app):
-    api.init_app(app)
+def init_routes(app: Flask):
+    app.register_blueprint(api)
 
     @app.route("/")
     def base():

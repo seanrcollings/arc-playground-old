@@ -1,8 +1,6 @@
 <script lang="ts">
   const text = ["A", "Regular", "CLI"];
   let hovered: number | null = null;
-
-  $: console.log(hovered);
 </script>
 
 <h1>
@@ -30,6 +28,7 @@
     margin: 10px 0px;
     font-size: 5em;
     font-weight: bold;
+    text-align: center;
 
     span {
       color: #ff3e00;

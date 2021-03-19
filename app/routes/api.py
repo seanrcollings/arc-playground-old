@@ -1,11 +1,8 @@
-from flask_restful import Api, Resource  # type: ignore
+from flask import Blueprint, request
 
-api = Api(prefix="/api")
-
-
-class HelloWorld(Resource):
-    def get(self):
-        return {"name": "Sean"}
+api = Blueprint("api", __name__, url_prefix="/api")
 
 
-api.add_resource(HelloWorld, "/")
+@api.route("/arc", methods=["GET", "POST"])
+def run_cli():
+    return {"test": "data"}
