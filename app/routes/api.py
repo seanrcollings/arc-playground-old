@@ -5,4 +5,7 @@ api = Blueprint("api", __name__, url_prefix="/api")
 
 @api.route("/arc", methods=["GET", "POST"])
 def run_cli():
-    return {"test": "data"}
+    if request.method == "GET":
+        return {"test": "stuff"}
+    else:
+        breakpoint()

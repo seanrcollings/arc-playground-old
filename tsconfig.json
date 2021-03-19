@@ -1,4 +1,5 @@
 {
+  "extends": "@tsconfig/svelte/tsconfig.json",
   "include": ["app/client/src/**/*"],
   "exclude": ["node_modules/*", "public/*"],
   "compilerOptions": {
@@ -14,7 +15,6 @@
 
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "strictNullChecks": true
+    "noEmit": true
   }
 }
