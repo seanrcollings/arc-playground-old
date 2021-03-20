@@ -1,37 +1,63 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import axios from "axios";
-  import { EditorState, EditorView, basicSetup } from "@codemirror/basic-setup";
-  import { python } from "@codemirror/lang-python";
-  import { oneDarkTheme } from "@codemirror/theme-one-dark";
+  import Editor from "./Editor.svelte";
+  import Examples from "./Examples.svelte";
+  import { fade } from "svelte/transition";
 
-  let editor: HTMLElement;
-
-  let view = new EditorView({
-    state: EditorState.create({
-      doc: "\n".repeat(20),
-      extensions: [basicSetup, python(), oneDarkTheme],
-    }),
-  });
-
-  onMount(() => {
-    editor.appendChild(view.dom);
-    console.log(view.state.doc.toString());
-  });
-
-  const sendCode = () => {
-    const code = view.state.doc.toString();
-    axios.post("/api/arc", { code });
-  };
+  let dragging = false;
 </script>
 
-<div>
-  <div class="editor" bind:this={editor} />
-  <button on:click={sendCode}>Send</button>
+<div class="content">
+  <div class="container">
+    <Editor />
+    {#if dragging}
+      <div class="overlay" transition:fade={{ duration: 300 }}>
+        <h2>Drop Example Here</h2>
+        <p>Any changes in the buffer will be lost!</p>
+      </div>
+    {/if}
+  </div>
+  <Examples
+    on:dragstart={() => (dragging = true)}
+    on:dragend={() => (dragging = false)}
+  />
+  <button on:click={() => console.log("hi")}>Send</button>
 </div>
 
 <style lang="scss">
-  .editor {
-    text-align: left;
+  .content {
+    width: 70%;
+    margin: auto;
+    display: flex;
+  }
+
+  .container {
+    flex: 3;
+  }
+
+  .container {
+    height: 400px;
+    position: relative;
+  }
+
+  .overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    h2,
+    p {
+      margin: 0px;
+    }
+  }
+
+  .overlay {
+    background-color: #0000009c;
   }
 </style>
