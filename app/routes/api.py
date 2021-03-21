@@ -8,4 +8,4 @@ def run_cli():
     if request.method == "GET":
         return {"test": "stuff"}
     else:
-        breakpoint()
+        return {"output": "Test output\n"}

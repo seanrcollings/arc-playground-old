@@ -1,13 +1,17 @@
 <script lang="typescript">
+  import { afterUpdate } from "svelte";
+  import { fade } from "svelte/transition";
+  import axios from "axios";
   import Editor from "./Editor.svelte";
   import Examples from "./Examples.svelte";
-  import { fade } from "svelte/transition";
+  import Output from "./Output.svelte";
   import type { Snippet } from "../examples";
   import { basicExample } from "../examples";
-  import axios from "axios";
 
   let dragging = false;
   let selected: Snippet = basicExample;
+  let output: string = "";
+
   let editorContainer: HTMLElement;
 
   const handleDragEnd = (event: CustomEvent) => {
@@ -25,8 +29,17 @@
   };
 
   const sendSnippet = (snippet: Snippet) => {
-    axios.post("/api/arc", { snippet });
+    axios
+      .post<{ output: string }>("/api/arc", { snippet })
+      .then(res => (output += res.data.output));
   };
+
+  afterUpdate(() => {
+    const href = window.location.href;
+    if (output.length != 0 && !href.endsWith("#output")) {
+      window.location.href = `${window.location.href}#output`;
+    }
+  });
 </script>
 
 <div class="content">
@@ -55,6 +68,7 @@
         <i class="material-icons">arrow_right_alt</i>
       </button>
     </div>
+    <Output content={output} />
   </div>
   <Examples
     on:dragstart={() => (dragging = true)}
