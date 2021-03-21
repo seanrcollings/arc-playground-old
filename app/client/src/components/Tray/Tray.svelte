@@ -32,15 +32,17 @@
 
 <div class="tray">
   <div class="tray-bar">
-    <button>
-      <i class="material-icons" on:click={() => handleClick(Menu.Examples)}>
-        article
-      </i>
+    <button
+      class:selected={menuState === Menu.Examples}
+      on:click={() => handleClick(Menu.Examples)}
+    >
+      <i class="material-icons"> article </i>
     </button>
-    <button>
-      <i class="material-icons" on:click={() => handleClick(Menu.Settings)}>
-        settings
-      </i>
+    <button
+      class:selected={menuState === Menu.Settings}
+      on:click={() => handleClick(Menu.Settings)}
+    >
+      <i class="material-icons"> settings </i>
     </button>
   </div>
 
@@ -66,9 +68,6 @@
     &-bar {
       width: 30px;
     }
-    &-content {
-      /* width: 0px; */
-    }
   }
 
   button {
@@ -80,8 +79,18 @@
     margin: 0px;
     color: rgb(95, 88, 88);
 
+    &.selected {
+      color: #ff3e00;
+    }
+
     &:hover {
       cursor: pointer;
+      color: #333;
+    }
+
+    &:active,
+    &:focus {
+      outline: none;
     }
   }
 </style>

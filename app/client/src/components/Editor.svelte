@@ -1,6 +1,5 @@
 <script lang="ts">
   import { afterUpdate, onMount } from "svelte";
-  import axios from "axios";
   import { EditorState, EditorView, basicSetup } from "@codemirror/basic-setup";
   import { python } from "@codemirror/lang-python";
   import { oneDarkTheme } from "@codemirror/theme-one-dark";
@@ -31,6 +30,8 @@
 
   afterUpdate(() => {
     // Inserts in the new chosen example's code
+    // Also gets called whenever you type anything
+    // into the field
     view.dispatch(
       view.state.update({
         changes: {
@@ -38,6 +39,9 @@
           to: view.state.doc.length,
           insert: content ? content.code : "",
         },
+        // Place the transition back in,
+        // so we aren't moved around when we type
+        selection: view.state.selection,
       })
     );
   });
