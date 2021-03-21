@@ -1,8 +1,8 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
   import { spring } from "svelte/motion";
-  import pannable from "../pannable";
-  import type { Snippet } from "../examples";
+  import pannable from "../../pannable";
+  import type { Snippet } from "../../examples";
 
   export let example: Snippet;
 

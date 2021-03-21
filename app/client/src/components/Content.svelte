@@ -3,8 +3,8 @@
   import { fade } from "svelte/transition";
   import axios from "axios";
   import Editor from "./Editor.svelte";
-  import Examples from "./Examples.svelte";
   import Output from "./Output.svelte";
+  import Tray from "./Tray/Tray.svelte";
   import type { Snippet } from "../examples";
   import { basicExample } from "../examples";
 
@@ -43,8 +43,8 @@
 </script>
 
 <div class="content">
-  <div class="wrapper-left">
-    <div class="container" bind:this={editorContainer}>
+  <div class="editor-container">
+    <div class="overlay-container" bind:this={editorContainer}>
       <Editor bind:content={selected} />
       {#if dragging}
         <div class="overlay" transition:fade={{ duration: 300 }}>
@@ -53,28 +53,30 @@
         </div>
       {/if}
     </div>
-    <div class="command">
-      <label for="command-input">
-        $
-        <input
-          id="command-input"
-          type="text"
-          placeholder="Command to Execute"
-          bind:value={selected.command}
-        />
-      </label>
-      <button on:click={() => sendSnippet(selected)}>
-        Execute
-        <i class="material-icons">arrow_right_alt</i>
-      </button>
-    </div>
-    <Output content={output} />
+
+    <Tray
+      on:dragstart={() => (dragging = true)}
+      on:dragend={handleDragEnd}
+      {selected}
+    />
   </div>
-  <Examples
-    on:dragstart={() => (dragging = true)}
-    on:dragend={handleDragEnd}
-    {selected}
-  />
+
+  <div class="command">
+    <label for="command-input">
+      $
+      <input
+        id="command-input"
+        type="text"
+        placeholder="Command to Execute"
+        bind:value={selected.command}
+      />
+    </label>
+    <button on:click={() => sendSnippet(selected)}>
+      Execute
+      <i class="material-icons">arrow_right_alt</i>
+    </button>
+  </div>
+  <Output content={output} />
 </div>
 
 <style lang="scss">
@@ -82,40 +84,38 @@
     width: 70%;
     margin: auto;
     display: flex;
-  }
-
-  .wrapper-left {
-    flex: 3;
-
-    display: flex;
     flex-direction: column;
   }
 
-  .container {
+  .editor-container {
+    display: flex;
+  }
+
+  .overlay-container {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
     height: 500px;
     position: relative;
-  }
 
-  .overlay {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
+    .overlay {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background-color: #0000009c;
 
-    h2,
-    p {
-      margin: 0px;
+      h2,
+      p {
+        margin: 0px;
+      }
     }
-  }
-
-  .overlay {
-    background-color: #0000009c;
   }
 
   .command {

@@ -47,6 +47,7 @@
 
 <style lang="scss">
   .editor {
+    flex: 3;
     text-align: left;
 
     width: 100%;

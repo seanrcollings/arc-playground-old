@@ -21,5 +21,6 @@
     padding: 10px;
     overflow-y: auto;
     color: white;
+    outline: none;
   }
 </style>
