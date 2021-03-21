@@ -50,7 +50,7 @@ export default {
 		file: 'app/client/build/bundle.js'
 	},
 	plugins: [
-		typeCheck(),
+		// typeCheck(),
 		svelte({
 			preprocess: sveltePreprocess({ sourceMap: !production }),
 			compilerOptions: {
@@ -71,12 +71,19 @@ export default {
 			browser: true,
 			dedupe: ['svelte']
 		}),
-		commonjs(),
+
 		typescript({
 			sourceMap: !production,
 			inlineSources: !production,
 			strict: true
 		}),
+
+		commonjs({
+      exclude: 'node_modules',
+      ignoreGlobal: true,
+    }),
+
+
 
 		// In dev mode, call `npm run start` once
 		// the bundle has been generated

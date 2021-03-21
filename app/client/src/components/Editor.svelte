@@ -1,30 +1,46 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { afterUpdate, onMount } from "svelte";
   import axios from "axios";
   import { EditorState, EditorView, basicSetup } from "@codemirror/basic-setup";
   import { python } from "@codemirror/lang-python";
   import { oneDarkTheme } from "@codemirror/theme-one-dark";
+  import type { Snippet } from "../examples";
 
-  export let selected = "";
+  export let content: Snippet;
 
   let editor: HTMLElement;
 
   let view = new EditorView({
     state: EditorState.create({
-      doc: selected,
+      doc: content ? content.code : "test",
       extensions: [basicSetup, python(), oneDarkTheme],
     }),
   });
 
   onMount(() => {
     editor.appendChild(view.dom);
-    console.log(view.state.doc.toString());
+    editor.addEventListener(
+      "keydown",
+      () =>
+        (content = {
+          ...content,
+          code: view.state.doc.toString(),
+        })
+    );
   });
 
-  const sendCode = () => {
-    const code = view.state.doc.toString();
-    axios.post("/api/arc", { code });
-  };
+  afterUpdate(() => {
+    // Inserts in the new chosen example's code
+    view.dispatch(
+      view.state.update({
+        changes: {
+          from: 0,
+          to: view.state.doc.length,
+          insert: content ? content.code : "",
+        },
+      })
+    );
+  });
 </script>
 
 <div class="editor" bind:this={editor} />
@@ -41,7 +57,7 @@
   }
 
   :global(.cm-wrap) {
-    min-height: 400px;
-    max-height: 400px;
+    min-height: 500px;
+    max-height: 500px;
   }
 </style>
