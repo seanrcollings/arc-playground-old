@@ -8,6 +8,7 @@ authors = ["Sean Collings <seanrcollings@gmail.com>"]
 python = "^3.9"
 Flask = "^1.1.2"
 Flask-RESTful = "^0.3.8"
+epicbox = "^1.1.0"
 
 [tool.poetry.dev-dependencies]
 black = "^20.8b1"

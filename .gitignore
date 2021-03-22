@@ -6,3 +6,4 @@
 app/client/build
 
 __pycache__
+yarn-error.log
