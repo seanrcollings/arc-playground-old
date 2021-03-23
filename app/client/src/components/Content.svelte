@@ -68,7 +68,7 @@
 
   <div class="command">
     <label for="command-input">
-      $
+      <span>$</span>
       <input
         id="command-input"
         type="text"
@@ -133,6 +133,11 @@
     label {
       flex: 2;
       padding: 10px;
+
+      span {
+        color: grey;
+      }
+
       input {
         background-color: transparent;
         border: 1px solid transparent;

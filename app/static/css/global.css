@@ -3,6 +3,11 @@
   --main-text-color: rgb(235, 235, 235);
 }
 
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 html,
 body {
   margin: 0px;
