@@ -8,11 +8,34 @@
   import type { Snippet } from "../examples";
   import { basicExample } from "../examples";
 
+  interface ExecResult {
+    stdout: string;
+    stderr: string;
+  }
+
+  /* State */
   let dragging = false;
   let selected: Snippet = basicExample;
   let output: string = "";
-
   let editorContainer: HTMLElement;
+
+  /* Life Cycle */
+  afterUpdate(() => {
+    const href = window.location.href;
+    if (output.length != 0 && !href.endsWith("#output")) {
+      window.location.href = `${window.location.href}#output`;
+    }
+  });
+
+  /* Helpers */
+  const sendSnippet = (snippet: Snippet) => {
+    axios
+      .post<ExecResult>("/api/arc/run", { snippet })
+      .then(res => {
+        console.log(res.data.stdout);
+        output += res.data.stdout + res.data.stderr;
+      });
+  };
 
   const handleDragEnd = (event: CustomEvent) => {
     dragging = false;
@@ -28,24 +51,13 @@
     }
   };
 
-  const sendSnippet = (snippet: Snippet) => {
-    axios
-      .post<{ output: string }>("/api/arc", { snippet })
-      .then(res => (output += res.data.output));
-  };
-
-  afterUpdate(() => {
-    const href = window.location.href;
-    if (output.length != 0 && !href.endsWith("#output")) {
-      window.location.href = `${window.location.href}#output`;
-    }
-  });
+  const update = (code: string) => (selected = { ...selected, code });
 </script>
 
 <div class="content">
   <div class="editor-container">
     <div class="overlay-container" bind:this={editorContainer}>
-      <Editor bind:content={selected} />
+      <Editor content={selected.code} {update} />
       {#if dragging}
         <div class="overlay" transition:fade={{ duration: 300 }}>
           <h2>Drop Example Here</h2>

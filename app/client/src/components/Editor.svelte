@@ -3,29 +3,22 @@
   import { EditorState, EditorView, basicSetup } from "@codemirror/basic-setup";
   import { python } from "@codemirror/lang-python";
   import { oneDarkTheme } from "@codemirror/theme-one-dark";
-  import type { Snippet } from "../examples";
 
-  export let content: Snippet;
+  export let content: string;
+  export let update: (code: string) => void;
 
   let editor: HTMLElement;
 
   let view = new EditorView({
     state: EditorState.create({
-      doc: content ? content.code : "test",
+      doc: content ? content : "test",
       extensions: [basicSetup, python(), oneDarkTheme],
     }),
   });
 
   onMount(() => {
     editor.appendChild(view.dom);
-    editor.addEventListener(
-      "keydown",
-      () =>
-        (content = {
-          ...content,
-          code: view.state.doc.toString(),
-        })
-    );
+    editor.addEventListener("keyup", () => update(view.state.doc.toString()));
   });
 
   afterUpdate(() => {
@@ -37,7 +30,7 @@
         changes: {
           from: 0,
           to: view.state.doc.length,
-          insert: content ? content.code : "",
+          insert: content ? content : "",
         },
         // Place the transition back in,
         // so we aren't moved around when we type
