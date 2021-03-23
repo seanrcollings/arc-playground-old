@@ -4,19 +4,15 @@
   import axios from "axios";
   import Editor from "./Editor.svelte";
   import Output from "./Output.svelte";
+  import type { OutputData } from "./Output.svelte";
   import Tray from "./Tray/Tray.svelte";
   import type { Snippet } from "../examples";
   import { basicExample } from "../examples";
 
-  interface ExecResult {
-    stdout: string;
-    stderr: string;
-  }
-
   /* State */
   let dragging = false;
   let selected: Snippet = basicExample;
-  let output: string = "";
+  let output: OutputData[] = [];
   let editorContainer: HTMLElement;
 
   /* Life Cycle */
@@ -30,11 +26,8 @@
   /* Helpers */
   const sendSnippet = (snippet: Snippet) => {
     axios
-      .post<ExecResult>("/api/arc/run", { snippet })
-      .then(res => {
-        console.log(res.data.stdout);
-        output += res.data.stdout + res.data.stderr;
-      });
+      .post<OutputData>("/api/arc/run", { snippet })
+      .then(res => (output = [...output, res.data]));
   };
 
   const handleDragEnd = (event: CustomEvent) => {

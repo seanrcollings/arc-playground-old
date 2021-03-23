@@ -1,7 +1,6 @@
 <script lang="typescript">
   import examples from "../../examples";
   import type { Snippet } from "../../examples";
-  import { flip } from "svelte/animate";
   import Example from "./Example.svelte";
 
   export let selected: Snippet | null = null;
@@ -18,7 +17,6 @@
 <style lang="scss">
   .examples {
     padding: 10px;
-
     display: flex;
     flex-direction: column;
   }

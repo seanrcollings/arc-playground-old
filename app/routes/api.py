@@ -16,10 +16,14 @@ def run():
     result: dict = epicbox.run(
         "python", f"python3 main.py {snippet['command']}", files=files, limits=limits
     )
+    exit_code = result.pop("exit_code")
+    oom_killed = result.pop("oom_killed")
     return jsonify(
         result
         | {
             "stdout": result["stdout"].decode("utf-8"),
             "stderr": result["stderr"].decode("utf-8"),
+            "exitCode": exit_code,
+            "oomKilled": oom_killed,
         }
     )
