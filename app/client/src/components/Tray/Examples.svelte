@@ -18,6 +18,8 @@
   .examples {
     padding: 10px;
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
+    justify-content: space-evenly;
+    flex-wrap: wrap;
   }
 </style>

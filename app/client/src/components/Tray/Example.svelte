@@ -51,31 +51,29 @@
   on:panend={handlePanEnd}
   style="transform: translate({$coords.x}px,{$coords.y}px)"
 >
-  <h3>{example.name}</h3>
-  <p>{example.desc}</p>
+  <h4>{example.name}</h4>
 </div>
 
 <style lang="scss">
   .example {
+    display: inline-block;
     background-color: #333;
     padding: 5px 8px;
-    min-height: 75px;
-    max-height: 75px;
     border-radius: 10px;
     border: 1px solid gray;
     overflow: hidden;
     z-index: 11;
     margin: 5px 0px;
 
-    h3 {
-      font-size: 25px;
+    h4 {
+      font-size: 17px;
       margin: 0px;
       user-select: none;
     }
-
+    /*
     p {
       margin: 5px 0px;
       user-select: none;
-    }
+    } */
   }
 </style>

@@ -6,6 +6,18 @@ export interface Snippet {
   arcfile: string;
 }
 
+// TODO: add commments and stuff to examples to get more into detail of each one
+// TODO: Make the descriptions better, and add them below the editor
+
+/*
+EXAMPLES TO ADD:
+  - Use of arc.color
+  - Demonstrating Converters
+  - Use of context
+  - Different Command Types
+
+*/
+
 export const basicExample: Snippet = {
   name: "Basic Example",
   desc: "Most Basic example of an arc cli",
@@ -25,7 +37,7 @@ cli()
 };
 
 export const flagExample: Snippet = {
-  name: "Flag Example",
+  name: "Flags",
   desc: "Using flags",
   code: `
 from arc import CLI

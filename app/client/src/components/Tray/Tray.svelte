@@ -13,6 +13,7 @@
   }
 
   let menuState: Menu = Menu.Closed;
+
   const width = tweened(0, {
     duration: 400,
     easing: cubicOut,
@@ -23,7 +24,6 @@
       menuState = Menu.Closed;
       width.set(0);
     } else {
-      console.log("hi there");
       menuState = newMenuState;
       width.set(300);
     }
@@ -48,11 +48,15 @@
 
   <div class="tray-content" style={`width: ${$width}px`}>
     {#if menuState == Menu.Examples}
-      <div transition:slide>
+      <div transition:slide class="tab">
+        <h3>Examples</h3>
         <Examples on:dragstart on:dragend {selected} />
+        <span class="info">Drag Example over Editor</span>
       </div>
     {:else if menuState == Menu.Settings}
-      <div transition:slide>settings</div>
+      <div transition:slide class="tab">
+        <h3>Settings</h3>
+      </div>
     {/if}
   </div>
 </div>
@@ -67,6 +71,28 @@
 
     &-bar {
       width: 30px;
+    }
+
+    &-content {
+      .tab {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      h3 {
+        text-align: center;
+        margin-top: 5px;
+        color: #333;
+      }
+
+      .info {
+        align-self: center;
+        justify-self: flex-end;
+        margin-top: auto;
+        margin-bottom: 5px;
+        color: gray;
+      }
     }
   }
 

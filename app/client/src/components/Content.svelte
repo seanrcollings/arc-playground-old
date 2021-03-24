@@ -14,6 +14,7 @@
   let selected: Snippet = basicExample;
   let output: OutputData[] = [];
   let editorContainer: HTMLElement;
+  let loading: boolean = false;
 
   /* Life Cycle */
   afterUpdate(() => {
@@ -25,9 +26,13 @@
 
   /* Helpers */
   const sendSnippet = (snippet: Snippet) => {
+    loading = true;
     axios
       .post<OutputData>("/api/arc/run", { snippet })
-      .then(res => (output = [...output, res.data]));
+      .then(res => {
+        output = [...output, res.data];
+        loading = false;
+      });
   };
 
   const handleDragEnd = (event: CustomEvent) => {
@@ -77,8 +82,12 @@
       />
     </label>
     <button on:click={() => sendSnippet(selected)}>
-      Execute
-      <i class="material-icons">arrow_right_alt</i>
+      {#if loading}
+        Loading...
+      {:else}
+        Execute
+        <i class="material-icons">arrow_right_alt</i>
+      {/if}
     </button>
   </div>
   <Output content={output} />
@@ -94,6 +103,7 @@
 
   .editor-container {
     display: flex;
+    height: 500px;
   }
 
   .overlay-container {
