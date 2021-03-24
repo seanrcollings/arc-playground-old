@@ -6,7 +6,7 @@
   import Output from "./Output.svelte";
   import type { OutputData } from "./Output.svelte";
   import Tray from "./Tray/Tray.svelte";
-  import type { Snippet } from "../examples";
+  import type { Snippet } from "../snippets";
   import { snippet } from "../stores";
 
   /* State */

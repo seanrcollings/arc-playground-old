@@ -1,5 +1,5 @@
 import { writable } from "svelte/store";
-import type { Snippet } from "./examples";
-import { basicExample } from "./examples";
+import type { Snippet } from "./snippets";
+import { basicExample } from "./snippets";
 
 export const snippet = writable<Snippet>(basicExample);

@@ -3,20 +3,28 @@ export interface Snippet {
   desc: string;
   code: string;
   command: string;
-  arcfile: string;
+  arcfile: Settings;
 }
 
-// TODO: add commments and stuff to examples to get more into detail of each one
-// TODO: Make the descriptions better, and add them below the editor
+export interface Settings {
+  namespaceSep: string;
+  argAssignment: string;
+  flagDenoter: string;
+  loglevel: number;
+}
 
 /*
 EXAMPLES TO ADD:
-  - Use of arc.color
-  - Demonstrating Converters
   - Use of context
   - Different Command Types
-
 */
+
+const defaultSetting: Settings = {
+  namespaceSep: ":",
+  argAssignment: "=",
+  flagDenoter: "--",
+  loglevel: 30,
+};
 
 export const basicExample: Snippet = {
   name: "Basic Example",
@@ -43,7 +51,7 @@ cli() # Causes the CLI to be executed when running the script
 # name variable below and see what happens when you execute it
 `,
   command: "hello name=Sean",
-  arcfile: "",
+  arcfile: defaultSetting,
 };
 
 export const flagExample: Snippet = {
@@ -63,7 +71,7 @@ def hello(name: str, reverse: bool):
 cli()
 `,
   command: "hello name=Sean --reverse",
-  arcfile: "",
+  arcfile: defaultSetting,
 };
 
 export const subcommandExample: Snippet = {
@@ -87,7 +95,7 @@ def friend(name: str):
 cli()
 `,
   command: "hello:friend name=Brooke ",
-  arcfile: "",
+  arcfile: defaultSetting,
 };
 
 export const colorExample: Snippet = {
@@ -116,7 +124,7 @@ def colored():
 cli()
   `,
   command: "colored",
-  arcfile: "",
+  arcfile: defaultSetting,
 };
 
 export const convertersExample: Snippet = {
@@ -133,8 +141,7 @@ from arc import CLI
 cli = CLI()
 
 # Each of the following commands will first print
-# the type of their given argument, then the argument itself
-# Feel free to mess around with them!
+#: string
 
 
 # python3 converters.py int value=5 -> int
@@ -186,7 +193,7 @@ cli()
 
 `,
   command: "int value=2",
-  arcfile: "",
+  arcfile: defaultSetting,
 };
 
 export default [

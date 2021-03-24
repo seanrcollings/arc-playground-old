@@ -1,6 +1,5 @@
 <script lang="typescript">
-  import examples from "../../examples";
-  import type { Snippet } from "../../examples";
+  import examples from "../../snippets";
   import Example from "./Example.svelte";
   import { snippet } from "../../stores";
 </script>

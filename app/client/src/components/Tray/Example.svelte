@@ -2,7 +2,7 @@
   import { createEventDispatcher } from "svelte";
   import { spring } from "svelte/motion";
   import pannable from "../../pannable";
-  import type { Snippet } from "../../examples";
+  import type { Snippet } from "../../snippets";
 
   export let example: Snippet;
 

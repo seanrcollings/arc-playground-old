@@ -3,6 +3,7 @@
   import { tweened } from "svelte/motion";
   import { slide } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
+  import Settings from "./Settings.svelte";
 
   enum Menu {
     Examples = "Examples",
@@ -54,6 +55,8 @@
     {:else if menuState == Menu.Settings}
       <div transition:slide class="tab">
         <h3>Settings</h3>
+        <Settings />
+        <span class="info">Settings written to the CLI's config file</span>
       </div>
     {/if}
   </div>
