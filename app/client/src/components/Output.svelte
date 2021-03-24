@@ -15,12 +15,19 @@
 
   export let content: OutputData[];
 
+  $: console.log(content);
+
   const convert = new Convert({
     newline: true,
   });
 
   const renderData = (data: string) => {
-    return convert.toHtml(data.split(" ").join("&nbsp;"));
+    return convert.toHtml(
+      data
+        .replaceAll(" ", "&nbsp;")
+        .replaceAll(">", "&gt;")
+        .replaceAll("<", "&lt;")
+    );
   };
 
   const renderTime = (time: number) => {

@@ -81,7 +81,7 @@
         bind:value={selected.command}
       />
     </label>
-    <button on:click={() => sendSnippet(selected)}>
+    <button disabled={loading} on:click={() => sendSnippet(selected)}>
       {#if loading}
         Loading...
       {:else}

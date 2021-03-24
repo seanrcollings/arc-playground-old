@@ -1,5 +1,4 @@
 from flask import Blueprint, request, jsonify
-from typing import TypedDict
 import epicbox
 
 api = Blueprint("api", __name__, url_prefix="/api")
