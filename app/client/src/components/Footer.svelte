@@ -4,7 +4,7 @@
 <footer>
   <div>
     Created by <a href="http://seanrcollings.com">Sean Collings</a>. Powered by
-    a <a href="http://svelte.dev">Svelte</a>
+    a <a href="https://svelte.dev">Svelte</a>
     and <a href="https://flask.palletsprojects.com/">Flask</a>
   </div>
 </footer>

@@ -25,7 +25,7 @@ export const basicExample: Snippet = {
 """ARC's declaritive nature makes
 it very easy to get up and running
 from scratch. With only ~ 6 lines of code
-below, we've got a fully function (if somple)
+below, we've got a fully functional (if simple)
 cli program
 """
 from arc import CLI

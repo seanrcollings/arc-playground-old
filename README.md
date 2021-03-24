@@ -6,4 +6,3 @@
 - Have the settings page be generated based off of a query to the backend (and the arc_config object)
 - Improve scolling to output (or just remove it?)
 - Option to clear output
--

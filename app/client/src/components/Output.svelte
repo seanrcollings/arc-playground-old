@@ -15,8 +15,6 @@
 
   export let content: OutputData[];
 
-  $: console.log(content);
-
   const convert = new Convert({
     newline: true,
   });
