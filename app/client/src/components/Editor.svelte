@@ -3,22 +3,27 @@
   import { EditorState, EditorView, basicSetup } from "@codemirror/basic-setup";
   import { python } from "@codemirror/lang-python";
   import { oneDarkTheme } from "@codemirror/theme-one-dark";
-
-  export let content: string;
-  export let update: (code: string) => void;
+  import { snippet } from "../stores";
 
   let editor: HTMLElement;
 
   let view = new EditorView({
     state: EditorState.create({
-      doc: content ? content : "test",
+      doc: $snippet.code,
       extensions: [basicSetup, python(), oneDarkTheme],
     }),
   });
 
   onMount(() => {
     editor.appendChild(view.dom);
-    editor.addEventListener("keyup", () => update(view.state.doc.toString()));
+    editor.addEventListener(
+      "keyup",
+      () =>
+        ($snippet = {
+          ...$snippet,
+          code: view.state.doc.toString(),
+        })
+    );
   });
 
   afterUpdate(() => {
@@ -30,7 +35,7 @@
         changes: {
           from: 0,
           to: view.state.doc.length,
-          insert: content ? content : "",
+          insert: $snippet.code,
         },
         // Place the transition back in,
         // so we aren't moved around when we type

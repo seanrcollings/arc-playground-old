@@ -7,11 +7,10 @@
   import type { OutputData } from "./Output.svelte";
   import Tray from "./Tray/Tray.svelte";
   import type { Snippet } from "../examples";
-  import { basicExample } from "../examples";
+  import { snippet } from "../stores";
 
   /* State */
   let dragging = false;
-  let selected: Snippet = basicExample;
   let output: OutputData[] = [];
   let editorContainer: HTMLElement;
   let loading: boolean = false;
@@ -45,17 +44,15 @@
       x > containerRect.left &&
       x < containerRect.right
     ) {
-      selected = example;
+      $snippet = example;
     }
   };
-
-  const update = (code: string) => (selected = { ...selected, code });
 </script>
 
 <div class="content">
   <div class="editor-container">
     <div class="overlay-container" bind:this={editorContainer}>
-      <Editor content={selected.code} {update} />
+      <Editor />
       {#if dragging}
         <div class="overlay" transition:fade={{ duration: 300 }}>
           <h2>Drop Example Here</h2>
@@ -64,11 +61,7 @@
       {/if}
     </div>
 
-    <Tray
-      on:dragstart={() => (dragging = true)}
-      on:dragend={handleDragEnd}
-      {selected}
-    />
+    <Tray on:dragstart={() => (dragging = true)} on:dragend={handleDragEnd} />
   </div>
 
   <div class="command">
@@ -78,10 +71,10 @@
         id="command-input"
         type="text"
         placeholder="Command to Execute"
-        bind:value={selected.command}
+        bind:value={$snippet.command}
       />
     </label>
-    <button disabled={loading} on:click={() => sendSnippet(selected)}>
+    <button disabled={loading} on:click={() => sendSnippet($snippet)}>
       {#if loading}
         Loading...
       {:else}

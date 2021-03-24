@@ -2,13 +2,12 @@
   import examples from "../../examples";
   import type { Snippet } from "../../examples";
   import Example from "./Example.svelte";
-
-  export let selected: Snippet | null = null;
+  import { snippet } from "../../stores";
 </script>
 
 <div class="examples">
   {#each examples as example}
-    {#if example != selected}
+    {#if example != $snippet}
       <Example on:dragstart on:dragend {example} />
     {/if}
   {/each}

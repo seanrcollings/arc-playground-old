@@ -3,8 +3,6 @@
   import { tweened } from "svelte/motion";
   import { slide } from "svelte/transition";
   import { cubicOut } from "svelte/easing";
-  import type { Snippet } from "../../examples";
-  export let selected: Snippet;
 
   enum Menu {
     Examples = "Examples",
@@ -50,7 +48,7 @@
     {#if menuState == Menu.Examples}
       <div transition:slide class="tab">
         <h3>Examples</h3>
-        <Examples on:dragstart on:dragend {selected} />
+        <Examples on:dragstart on:dragend />
         <span class="info">Drag Example over Editor</span>
       </div>
     {:else if menuState == Menu.Settings}
