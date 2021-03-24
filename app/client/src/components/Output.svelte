@@ -43,12 +43,11 @@
     {#each content as output}
       <div class="output-item" transition:slide>
         <div>
-          {#if output.stdout.length > 0}
+          {#if output.exitCode == 0}
             <div class="stdout">
               {@html renderData(output.stdout)}
             </div>
-          {/if}
-          {#if output.stderr.length > 0}
+          {:else}
             <div class="stderr">
               {@html renderData(output.stderr)}
             </div>
